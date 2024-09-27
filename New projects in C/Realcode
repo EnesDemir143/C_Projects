@@ -1,0 +1,164 @@
+//230202066 Enes Demir
+#include <stdio.h>
+#include <stdlib.h>
+#include<string.h>
+#include<math.h>
+
+struct oda{
+        int odano;
+        int yataksay;
+        int ucret;
+        char manzara[50];
+};
+
+struct musteri{
+        char musteriadi[100];
+        struct oda odabilgileri;
+        char giristarih[20];
+        char cikistarihi[20];
+        float toplamucret;
+};
+
+void rezervasyonekle(int i,struct musteri kisi[])
+{
+
+
+    printf("Yeni musteri ekleyin: \n");
+
+    printf("Musteri adi: ");
+    fgets(kisi[i].musteriadi,100,stdin);
+    kisi[i].musteriadi[strlen(kisi[i].musteriadi)]='\0';
+
+    printf("Oda numarasi: ");
+    scanf("%d",&kisi[i].odabilgileri.odano);
+    fflush(stdin);
+
+    printf("yatak sayisi: ");
+    scanf("%d",&kisi[i].odabilgileri.yataksay);
+    fflush(stdin);
+
+    printf("ucret: ");
+    scanf("%d",&kisi[i].odabilgileri.ucret);
+    fflush(stdin);
+
+        printf("Manzara: ");
+    fgets(kisi[i].odabilgileri.manzara,50,stdin);
+    kisi[i].odabilgileri.manzara[strlen(kisi[i].odabilgileri.manzara)]='\0';
+
+        printf("Giris tarihi: ");
+    fgets(kisi[i].giristarih,20,stdin);
+    kisi[i].giristarih[strlen(kisi[i].giristarih)]='\0';
+
+            printf("cikis tarihi: ");
+    fgets(kisi[i].cikistarihi,20,stdin);
+    kisi[i].cikistarihi[strlen(kisi[i].cikistarihi)]='\0';
+
+    printf("Rezervasyon basariyla eklendi\n");
+}
+
+void rezervasyonlarilistele(int i,struct musteri kisiler[100])
+{
+    for(int j=0;j<i;j++)
+    {
+        printf("Musteri adi: %s\n",kisiler[i].musteriadi);
+        printf("Oda numarasi: %d\n",kisiler[i].odabilgileri.odano);
+        printf("Giris tarihi: %s\n",kisiler[i].giristarih);
+        printf("cikis tarihi: %s\n",kisiler[i].cikistarihi);
+        printf("Toplam ucret: %d\n",kisiler[i].odabilgileri.ucret);
+    }
+}
+
+void odanumgore(int i,struct musteri kisiler[])
+{
+    int numara;
+    printf("Aradiginiz oda numarası nedir: ");
+    scanf("%d",&numara);
+    fflush(stdin);
+
+    for(int j=0;j<i;j++)
+    {
+        if(kisiler[j].odabilgileri.odano== numara)
+        {
+        printf("Musteri adi: %s\n",kisiler[j].musteriadi);
+        printf("Oda numarasi: %d\n",kisiler[j].odabilgileri.odano);
+        printf("Giris tarihi: %s\n",kisiler[j].giristarih);
+        printf("cikis tarihi: %s\n",kisiler[j].cikistarihi);
+        printf("Toplam ucret: %d\n",kisiler[j].odabilgileri.ucret);
+        }
+    }
+}
+
+void giristarihisirala(int i,struct musteri kisiler[])
+{
+    struct musteri *degistirme=kisiler;
+    for(int j=0;j<i;j++)
+    {
+        for(int f=0;f<i;f++)
+        {
+            if(strcmp(degistirme[j].giristarih,degistirme[f].giristarih)<0)
+            {
+                struct musteri temp=degistirme[j];
+                degistirme[j]=degistirme[f];
+                degistirme[f]=temp;
+            }
+        }
+    }
+
+     for(int j=0;j<i;j++)
+    {
+
+        printf("Musteri adi: %s\n",degistirme[j].musteriadi);
+        printf("Oda numarasi: %d\n",degistirme[j].odabilgileri.odano);
+        printf("Giris tarihi: %s\n",degistirme[j].giristarih);
+        printf("cikis tarihi: %s\n",degistirme[j].cikistarihi);
+        printf("Toplam ucret: %d\n",degistirme[j].odabilgileri.ucret);
+
+    }
+}
+
+int main()
+{
+    printf("---Otel rezervasyon sistemi---\n");
+    printf("1.Rezervasyon ekle\n");
+    printf("2.Rezervasyonlari listele\n");
+    printf("3.Oda numarasına gore ayarla\n");
+    printf("4.Giris tarihine gore ayarla\n");
+    printf("5.Cikis\n");
+
+    struct musteri kisiler[100];
+
+    while(1)
+    {
+        int kisisayisi=0;
+        int secim;
+    printf("Seciminizi yapiniz: ");
+    scanf("%d",&secim);
+    fflush(stdin);
+
+    if(secim==5){
+            printf("Programdan cikiliyor.");
+        break;
+    }
+
+    switch(secim)
+    {
+        case 1: rezervasyonekle(kisisayisi,kisiler);
+        break;
+        case 2:rezervasyonlarilistele(kisisayisi,kisiler);
+        break;
+        case 3:odanumgore(kisisayisi,kisiler);
+        break;
+        case 4:giristarihisirala(kisisayisi,kisiler);
+        break;
+        default:
+        break;
+    }
+        if(secim==1)
+        {
+             kisisayisi++;
+        }
+
+    }
+
+    return 0;
+}
